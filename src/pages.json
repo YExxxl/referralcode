@@ -1,0 +1,124 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "内推广场",
+				"navigationBarBackgroundColor": "#309AEC",
+				"navigationBarTextStyle": "white",
+				"enablePullDownRefresh": false,
+				"backgroundColor": "#ffffff",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/index/fabu",
+			"style": {
+				"navigationBarTitleText": "发布内推",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/index/xiangqing",
+			"style": {
+				"navigationBarTitleText": "内推详情"
+			}
+		},
+		{
+			"path": "pages/zhaopin/zhaopin",
+			"style": {
+				"navigationBarTitleText": "招聘"
+			}
+		},
+		{
+			"path": "pages/geren/geren",
+			"style": {
+				"navigationBarTitleText": "个人中心",
+				"navigationBarTextStyle": "white",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/geren/myCollection",
+			"style": {
+				"navigationBarTitleText": "我的收藏"
+			}
+		},
+		{
+			"path": "pages/geren/myPost",
+			"style": {
+				"navigationBarTitleText": "我的发布"
+			}
+		},
+		{
+			"path": "pages/geren/mySetting",
+			"style": {
+				"navigationBarTitleText": "设置"
+			}
+		},
+		{
+			"path": "pages/geren/pinnedPromotion",
+			"style": {
+				"navigationBarTitleText": "置顶推广"
+			}
+		},
+		{
+			"path": "pages/geren/aboutUs",
+			"style": {
+				"navigationBarTitleText": "关于我们"
+			}
+		},
+		{
+			"path": "pages/geren/privacyAgreement",
+			"style": {
+				"navigationBarTitleText": "隐私协议"
+			}
+		},
+		{
+			"path": "pages/geren/serviceAgreement",
+			"style": {
+				"navigationBarTitleText": "服务协议"
+			}
+		},
+		{
+			"path": "pages/geren/legalNotices",
+			"style": {
+				"navigationBarTitleText": "法律声明"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"color": "#808080ff",
+		"backgroundColor": "#fafafa",
+		"selectedColor": "#388bff",
+		"borderStyle": "white",
+		"height": "80px",
+		"list": [
+			{
+				"text": "内推广场",
+				"pagePath": "pages/index/index",
+				"iconPath": "static/index/新闻资讯.png",
+				"selectedIconPath": "static/index/新闻资讯.png"
+			},
+			{
+				"text": "招聘",
+				"pagePath": "pages/zhaopin/zhaopin",
+				"iconPath": "static/zhaopin/zhaopin.png",
+				"selectedIconPath": "static/zhaopin/zhaopin.png"
+			},
+			{
+				"text": "个人中心",
+				"pagePath": "pages/geren/geren",
+				"iconPath": "static/geren/geren.png",
+				"selectedIconPath": "static/geren/geren.png"
+			}
+		],
+		"position": "bottom"
+	}
+}
