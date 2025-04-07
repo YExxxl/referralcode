@@ -38,7 +38,11 @@
     </view>
 
     <!-- 职位列表 -->
-    <NeituiList :jobs="jobs"></NeituiList>
+    <view class="neituiList">
+      <view v-for="job in jobs" :key="job.id" class="jobList">
+        <NeituiList :jobs="[job]"></NeituiList>
+      </view>
+    </view>
 
     <!-- 发布职位悬浮按钮 -->
 
@@ -54,7 +58,6 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { onLoad } from "@dcloudio/uni-app";
 import { getStatusBarHeight, getTitleBarHeight } from '@/utils/system.js';
 
 import SearchTab from "@/components/SearchTab/SearchTab.vue";
@@ -69,8 +72,6 @@ export default {
   },
   setup() {
     // 状态管理
-    const nartitleBarTop = ref(0);
-    const nartitleBarHeight = ref(0);
     const navBgColor = ref("rgba(0, 122, 255, 1)");
     const activeTab = ref("校招");
     const activeList = ref("热门");
@@ -79,7 +80,7 @@ export default {
     const customData = ref(["游戏设计", "机械设计", "工业设计", "互联网", "影视行业", "人工智能", "大数据"]);
 
     // 筛选行业变化
-    const customDataChange = (e) => {
+    const customDataChange = (e: { detail: { value: number } }) => {
       selectedIndustryIndex.value = e.detail.value;
       // 这里可以添加筛选逻辑
       console.log("选择了:", customData.value[e.detail.value]);
@@ -157,11 +158,11 @@ export default {
     ]);
 
     // 方法
-    const switchTab = (tab) => {
+    const switchTab = (tab: string) => {
       activeTab.value = tab;
     };
 
-    const switchList = (list) => {
+    const switchList = (list: string) => {
       activeList.value = list;
     };
 
@@ -297,6 +298,17 @@ export default {
       }
     }
 
+  }
+}
+
+.jobList {
+  margin: 10px;
+  overflow: hidden;
+  
+  &:last-child {
+    margin-bottom: 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    
   }
 }
 

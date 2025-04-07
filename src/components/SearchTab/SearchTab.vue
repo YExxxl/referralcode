@@ -1,13 +1,30 @@
 <template>
-  <view class="search-container">
-    <image src="/src/static/index/搜索图标（在首页的）.png" mode="aspectFit" class="image1" />
-    <image src="/src/static/index/直线1.png" mode="aspectFit" class="image2" />
-    <input class="search-input" type="text" placeholder="搜索公司"  />
+  <view class="search-container" :style="{ background: backgroundColor, borderRadius: borderRadius }">
+    <image :src="searchIcon" mode="aspectFit" class="image1" />
+    <input class="search-input" type="text" placeholder="搜索公司" />
   </view>
 </template>
 
-<script lang="ts"> 
-
+<script lang="ts">
+export default {
+  props: {
+    backgroundColor: {
+      type: String,
+      default: '#ffffff'
+    },
+    borderRadius: {
+      type: String,
+      default: '10px'
+    },
+    searchIcon: {
+      type: String,
+      default: '/static/index/SearchTab1.png'
+    }
+  },
+  setup(props) {
+    return {}
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -15,10 +32,9 @@
   position: relative;
   display: flex;
   justify-content: flex-start;
-  background: #ffffff;
   align-items: center;
   margin: 0 10px;
-  border-radius: 10px;
+  height: 100%;
 
   .image1 {
     width: 28px;
@@ -26,16 +42,8 @@
     margin-left: 12px;
   }
 
-  .image2 {
-    width: 5px;
-    height: 15px;
-  }
-
   .search-input {
     padding: 10px 10px;
-    border-radius: 10px;
-    background-color:  rgb(255, 255, 255);
   }
-
 }
 </style>
