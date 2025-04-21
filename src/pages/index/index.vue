@@ -45,7 +45,6 @@
     </view>
 
     <!-- 发布职位悬浮按钮 -->
-
     <view class="fabuButton">
       <navigator url="/pages/index/fabu" open-type="navigate">
         <image src="/src/static/index/编辑（发布）.png" mode="aspectFit" />

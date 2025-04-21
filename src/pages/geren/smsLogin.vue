@@ -152,7 +152,21 @@ const getSmsCode = async () => {
 
     try {
         uni.showLoading({ title: '发送中...', mask: true })
-        await mockApiRequest()
+
+        // 替换为真实获取验证码接口
+        await uni.request({
+            url: 'http://119.29.119.100:8083/user/sendSms', 
+            method: 'POST',
+            header: {
+                'Content-Type': 'application/json',
+                'token': 'eyJhbGciOiJIUzI1NiJ9.eyJhZG1pbklkIjoxLCJhY2NvdW50IjoiMTIzIiwic3ViIjoiYWRtaW5Mb2dpbiIsImV4cCI6MTc2Njg5NjUzM30.qpZbhdGYtGBG-Dlm9hhph8wQQv4CaSWvHlkcg3SB930',
+            },
+            data: {
+                phoneNumber: formState.phone,
+                countryCode: selectedCountryCode.value.value
+            }
+        })
+
         startCountdown()
         uni.showToast({
             title: `验证码已发送至 ${selectedCountryCode.value.value}${formState.phone}`,
@@ -168,13 +182,13 @@ const getSmsCode = async () => {
 
 const startCountdown = (seconds = 60) => {
     countdown.value = seconds
-    countdownTimer.value = window.setInterval(() => {
+    countdownTimer.value = setInterval(() => {
         countdown.value--
         if (countdown.value <= 0 && countdownTimer.value !== null) {
             clearInterval(countdownTimer.value)
             countdownTimer.value = null
         }
-    }, 1000)
+    }, 1000) as unknown as number
 }
 
 const handleSubmit = async () => {
@@ -191,18 +205,48 @@ const handleSubmit = async () => {
     isSubmitting.value = true
 
     try {
-        await mockApiRequest(1500)
-        uni.showToast({ title: '登录成功', icon: 'success' })
-        uni.navigateBack()
+        const { data, statusCode } = await new Promise<UniApp.RequestSuccessCallbackResult>((resolve, reject) => {
+            uni.request({
+                url: 'http://119.29.119.100:8083/user/smsLogin',
+                method: 'POST',
+                header: {
+                    'Content-Type': 'application/json',
+                    'token': 'eyJhbGciOiJIUzI1NiJ9.eyJhZG1pbklkIjoxLCJhY2NvdW50IjoiMTIzIiwic3ViIjoiYWRtaW5Mb2dpbiIsImV4cCI6MTc2Njg5NjUzM30.qpZbhdGYtGBG-Dlm9hhph8wQQv4CaSWvHlkcg3SB930',
+                },
+                data: {
+                    phoneNumber: formState.phone,
+                    smsCode: formState.code,
+                    countryCode: selectedCountryCode.value.value
+                },
+                success: resolve,
+                fail: reject
+            })
+        })
+
+        // 类型断言确保data是对象类型
+        const responseData = data as Record<string, any>
+
+        if (statusCode === 200) {
+            if (responseData.token) {
+                uni.setStorageSync('token', responseData.token)
+                uni.showToast({ title: '登录成功', icon: 'success' })
+                uni.navigateBack()
+            } else {
+                throw new Error('登录成功但未返回token')
+            }
+        } else {
+            throw new Error(responseData.message || '登录失败')
+        }
     } catch (error) {
         console.error('登录失败:', error)
-        uni.showToast({ title: '登录失败', icon: 'none' })
+        uni.showToast({
+            title: error instanceof Error ? error.message : '登录失败',
+            icon: 'none'
+        })
     } finally {
         isSubmitting.value = false
     }
 }
-
-const mockApiRequest = (delay = 1000) => new Promise(resolve => setTimeout(resolve, delay))
 
 onUnmounted(() => {
     if (countdownTimer.value !== null) {

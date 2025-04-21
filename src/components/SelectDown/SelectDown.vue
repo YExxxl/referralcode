@@ -28,16 +28,17 @@
       </view>
 
       <!-- 为空时的显示文案 -->
-      <view v-if="realValue.length == 0 && showplaceholder">{{
+      <view v-if="realValue.length == 0 && showplaceholder" class="uni-select-dc-placeholder">{{
         placeholder
-      }}</view>
+        }}</view>
 
       <!-- 右边的下拉箭头 -->
-      <view :class="{ disabled: disabled, 'uni-select-dc-icon': !downInner, 'uni-select-dc-inner': downInner }">
-        <text></text>
+      <view :class="{ disabled: disabled, 'uni-select-dc-icon': !downInner, 'uni-select-dc-inner': downInner }"
+        class="arrow-container">
+        <image :src="arrowIcon" style="width: 10px; height: 5px;" @click.stop="handleSelect"></image>
       </view>
     </view>
-    
+
     <!-- 下拉选项 -->
     <scroll-view class="uni-select-dc-options" :scroll-y="true" v-show="active">
       <template>
@@ -52,6 +53,10 @@
 
 <script lang="ts" setup>
 import { onMounted, reactive, ref } from "vue";
+
+const arrowIconSrc1 = ref<string>("/static/zhaopin/灰色箭头.png"); // 定义图片路径
+const arrowIconSrc2 = ref<string>("/static/zhaopin/蓝色箭头.png"); // 定义图片路径
+const arrowIcon = ref<string>(arrowIconSrc1.value); // 使用本地状态来控制箭头图片
 
 const props = defineProps({
   // 是否显示全部清空按钮
@@ -144,6 +149,8 @@ const init = () => {
 const handleSelect = () => {
   if (props.disabled) return;
   active.value = !active.value;
+  // 切换箭头图片
+  arrowIcon.value = active.value ? arrowIconSrc2.value : arrowIconSrc1.value;
 };
 // 移除数据
 const handleRemove = (index: any) => {
@@ -157,7 +164,7 @@ const handleRemove = (index: any) => {
   emit("change", changevalue, realValue);
 };
 // 点击组件某一项
-const handleChange = (index, item) => {
+const handleChange = (index: number | null, item: any) => {
   console.log("选中了某一项", index, item);
   // 如果是单选框，选中一项后直接关闭
   if (!props.multiple) {
@@ -188,7 +195,6 @@ const handleChange = (index, item) => {
 <style lang="scss" scoped>
 .uni-select-dc {
   position: relative;
-  z-index: 999;
 
   .uni-select-mask {
     width: 100%;
@@ -232,67 +238,35 @@ const handleChange = (index, item) => {
   }
 }
 
-/* 所有情空的定位 */
-.close-postion {
-  position: absolute;
-  right: 35px;
-  top: 0;
-  height: 100%;
-  width: 15px;
-}
-
-/* 多选盒子 */
-.uni-select-multiple {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow: scroll;
-
-  .single-text {
-    color: #333;
-  }
-
-  .uni-select-multiple-item {
-    background: #f4f4f5;
-    margin-right: 5px;
-    padding: 2px 4px;
-    border-radius: 4px;
-    color: #909399;
-    display: flex;
-    flex-shrink: 0;
-  }
-}
-
 /* select部分 */
 .uni-select-dc-select {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   user-select: none;
   position: relative;
   z-index: 3;
   height: 30px;
-  padding: 0 30px 0 10px;
-  box-sizing: border-box;
-  border-radius: 4px;
-  border: 1px solid rgb(229, 229, 229);
-  display: flex;
-  align-items: center;
+  padding: 0 20px 0 10px;
+  // box-sizing: border-box;
   font-size: 12px;
-  color: #999;
+  color: rgba(117, 117, 117, 1);
   min-width: 10px;
 
-  .uni-disabled {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 19;
-    cursor: no-drop;
-    background: rgba(255, 255, 255, 0.5);
-  }
+  // .uni-disabled {
+  //   position: absolute;
+  //   left: 0;
+  //   width: 100%;
+  //   height: 100%;
+  //   z-index: 19;
+  //   cursor: no-drop;
+  //   background: rgba(255, 255, 255, 0.5);
+  // }
 
   .uni-select-dc-input {
-    font-size: 14px;
+    font-size: 12px;
     color: #999;
     display: block;
-    width: 96%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -305,102 +279,24 @@ const handleChange = (index, item) => {
   }
 
   .uni-select-dc-icon {
-    cursor: pointer;
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 100%;
-    width: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-left: 1px solid rgb(229, 229, 229);
-
-    text {
-      display: block;
-      width: 0;
-      height: 0;
-      border-width: 12rpx 12rpx 0;
-      border-style: solid;
-      border-color: #bbb transparent transparent;
-      transition: 0.3s;
-    }
 
     &.disabled {
       cursor: no-drop;
-
-      text {
-        width: 20rpx;
-        height: 20rpx;
-        border: 2px solid #ff0000;
-        border-radius: 50%;
-        transition: 0.3s;
-        position: relative;
-        z-index: 999;
-
-        &::after {
-          content: "";
-          position: absolute;
-          top: 50%;
-          left: 0;
-          width: 100%;
-          height: 2px;
-          margin-top: -1px;
-          background-color: #ff0000;
-          transform: rotate(45deg);
-        }
-      }
     }
   }
 
   .uni-select-dc-inner {
-    cursor: pointer;
-    position: absolute;
-    right: 0;
-    top: 0;
     height: 100%;
-    width: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
 
-    text {
-      display: block;
-      width: 10px;
-      height: 10px;
-      position: absolute;
-      right: 10px;
-      top: 6px;
-      border: 1px solid #bbb;
-      transform: rotate(-45deg);
-      border-color: transparent transparent#bbb #bbb;
-      transition: 0.3s;
-    }
-
     &.disabled {
       cursor: no-drop;
 
-      text {
-        width: 20rpx;
-        height: 20rpx;
-        border: 2px solid #ff0000;
-        border-radius: 50%;
-        transition: 0.3s;
-        position: relative;
-        z-index: 999;
-
-        &::after {
-          content: "";
-          position: absolute;
-          top: 50%;
-          left: 0;
-          width: 100%;
-          height: 2px;
-          margin-top: -1px;
-          background-color: #ff0000;
-          transform: rotate(45deg);
-        }
-      }
     }
   }
 
@@ -414,28 +310,48 @@ const handleChange = (index, item) => {
   &.active .uni-select-dc-inner {
     text {
       position: absolute;
-      right: 10px;
       top: 12px;
       transform: rotate(-225deg);
     }
   }
 }
 
-/* options部分 */
+/* 选择后的样式 */
+.uni-select-multiple {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  font-size: 12px;
+
+  .uni-select-multiple-item {
+    background: #f4f4f5;
+    color: #909399;
+    display: flex;
+  }
+
+  .single-text {
+    color: rgba(60, 141, 255, 1);
+    white-space: nowrap; // 防止文字换行
+    overflow: hidden; // 文字超出容器时隐藏
+  }
+}
+
+/* 下拉的options部分 */
 .uni-select-dc-options {
   user-select: none;
   position: absolute;
-  top: calc(100% + 5px);
+  top: calc(100%);
   left: 0;
-  width: 100%;
+  margin: 0;
+  width: 100vw;
   /*  height: 400rpx; */
-  max-height: 400rpx;
-  border-radius: 4px;
+  // max-height: 400rpx;
+  // border-radius: 4px;
   border: 1px solid rgb(229, 229, 229);
-  background: #fff;
+  background: rgba(255, 255, 255, 1);
   padding: 5px 0;
   box-sizing: border-box;
-  z-index: 9;
 
   .uni-select-dc-item {
     padding: 0 10px;
@@ -459,5 +375,14 @@ const handleChange = (index, item) => {
       background-color: #f5f5f5;
     }
   }
+}
+
+/* 所有情空的定位 */
+.close-postion {
+  position: absolute;
+  right: 35px;
+  top: 0;
+  height: 100%;
+  width: 15px;
 }
 </style>

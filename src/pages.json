@@ -33,6 +33,13 @@
       }
     },
     {
+      "path": "pages/zhaopin/baseCity",
+      "style": {
+        "navigationBarTitleText": "选择城市",
+        "navigationBarBackgroundColor": "#ffffff"
+      }
+    },
+    {
       "path": "pages/geren/geren",
       "style": {
         "navigationBarTitleText": "个人中心",
@@ -50,43 +57,50 @@
     {
       "path": "pages/geren/myPost",
       "style": {
-        "navigationBarTitleText": "我的发布"
+        "navigationBarTitleText": "我的发布",
+        "navigationBarBackgroundColor": "#ffffff"
       }
     },
     {
       "path": "pages/geren/mySetting",
       "style": {
-        "navigationBarTitleText": "设置"
+        "navigationBarTitleText": "设置",
+        "navigationBarBackgroundColor": "#ffffff"
       }
     },
     {
       "path": "pages/geren/pinnedPromotion",
       "style": {
-        "navigationBarTitleText": "置顶推广"
+        "navigationBarTitleText": "置顶推广",
+        "navigationBarBackgroundColor": "#ffffff"
       }
     },
     {
       "path": "pages/geren/aboutUs",
       "style": {
-        "navigationBarTitleText": "关于我们"
+        "navigationBarTitleText": "关于我们",
+        "navigationBarBackgroundColor": "#ffffff"
       }
     },
     {
       "path": "pages/geren/privacyAgreement",
       "style": {
-        "navigationBarTitleText": "隐私协议"
+        "navigationBarTitleText": "隐私协议",
+        "navigationBarBackgroundColor": "#ffffff"
       }
     },
     {
       "path": "pages/geren/serviceAgreement",
       "style": {
-        "navigationBarTitleText": "服务协议"
+        "navigationBarTitleText": "服务协议",
+        "navigationBarBackgroundColor": "#ffffff"
       }
     },
     {
       "path": "pages/geren/legalNotices",
       "style": {
-        "navigationBarTitleText": "法律声明"
+        "navigationBarTitleText": "法律声明",
+        "navigationBarBackgroundColor": "#ffffff"
       }
     },
     {

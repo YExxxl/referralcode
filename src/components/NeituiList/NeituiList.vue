@@ -32,8 +32,8 @@
           </view>
         </view>
         <view class="jobCheck">
-          <navigator url="/pages/index/xiangqing" open-type="navigate">查看详情</navigator>
-          <image src="/src/static/index/查看详情.png"/>
+          <navigator :url="detailUrl" open-type="navigate">{{ checkDetail }}</navigator>
+          <image :src="jobcheckIcon"/>
         </view>
       </view>
     </view>
@@ -47,6 +47,18 @@ export default {
       type: Array,
       required: true,
     },
+    detailUrl:{
+      type:String,
+      default:'/pages/index/xiangqing'
+    },
+    checkDetail:{
+      type:String,
+      default:'查看详情'
+    },
+    jobcheckIcon:{
+      type:String,
+      default:'/static/index/查看详情.png'
+    }
   },
   setup(props) {
     return {

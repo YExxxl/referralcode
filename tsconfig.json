@@ -12,7 +12,8 @@
       "@types/wechat-miniprogram",
       "@uni-helper/uni-ui-types", // uni-ui 组件类型
       "@uni-helper/uni-app-types", // uni-app 组件类型
-      "uview-plus/types" // uni-ui 组件类型
+      "uview-plus/types", // uni-ui 组件类型
+      "node"
     ]
     // "allowImportingTsExtensions": true, // 移除此行或注释掉
   },

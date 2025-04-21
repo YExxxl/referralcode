@@ -8,7 +8,8 @@
 			</view>
 			<!-- 搜索框 -->
 			<view class="searchTab">
-				<SearchTab :backgroundColor="searchBackgroundColor" :borderRadius="'20px'" />
+				<SearchTab :backgroundColor="searchBackgroundColor" :borderRadius="'20px'"
+					:searchIcon="'/static/zhaopin/搜索图标（在校园招聘）.png'" />
 			</view>
 		</view>
 

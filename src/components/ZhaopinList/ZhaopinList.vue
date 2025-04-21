@@ -300,6 +300,7 @@ export default {
       .webLinkText {
         color: rgba(0, 0, 0, 0.7);
         margin-right: 5px;
+        text-overflow: ellipsis;// 文字溢出时显示省略号
       }
 
       .webCopyBtn {

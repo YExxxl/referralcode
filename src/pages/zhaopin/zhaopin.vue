@@ -10,10 +10,23 @@
 
 		<view class="content2">
 			<view class="jobCompanyType">
-				<SelectDown :value="monIndex" downInner :options="options" @change="changeValue" placeholder="企业性质"></SelectDown>
+				<SelectDown :value="monIndex" downInner :options="options" @change="changeValue" placeholder="企业性质">
+				</SelectDown>
 			</view>
-			<view class="jobCategory">行业类型</view>
-			<view class="jobCity">所在城市</view>
+			<view class="jobCategory">
+				<view class="filter" :class="{ active: selectedIndustryIndex !== -1 }">
+					<picker :range="customData" mode="selector" @change="customDataChange" @cancel="cancelSelect"
+						:value="selectedIndustryIndex">{{ selectedIndustryText }}
+					</picker>
+					<image src="/src/static/zhaopin/灰色箭头.png" mode="scaleToFill" />
+				</view>
+			</view>
+			<view class="jobCity">
+				<navigator url="/pages/zhaopin/baseCity" open-type="navigate">
+					<text>所在城市</text>
+					<image src="/src/static/zhaopin/灰色箭头.png" mode="scaleToFill" />
+				</navigator>
+			</view>
 		</view>
 
 		<view class="zhaopinList">
@@ -26,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import SearchTab from "@/components/SearchTab/SearchTab.vue";
 import ZhaopinList from "@/components/ZhaopinList/ZhaopinList.vue";
 import SelectDown from "@/components/SelectDown/SelectDown.vue";
@@ -47,8 +60,9 @@ export default {
 	},
 	data() {
 		return {
-			monIndex: 0,
+			monIndex: [0],
 			options: [
+				{ value: 0, text: "全部" },
 				{ value: 1, text: "民营" },
 				{ value: 2, text: "国企" },
 				{ value: 3, text: "外企" },
@@ -58,7 +72,7 @@ export default {
 		};
 	},
 	methods: {
-		changeValue(e) {
+		changeValue(e: Event) {
 			console.log("e:", e);
 		},
 	},
@@ -131,8 +145,35 @@ export default {
 			},
 		]);
 
+		const selectedIndustryIndex = ref(-1); // 当前选中的行业索引
+		const customData = ref(["互联网|游戏|软件", "建筑|地产|家居", "IT|通信|电子", "汽车|机械|制造网", "金融|保险|银行", "金融|保险|银行", "快速消费品"]);
+
+		// 筛选行业变化
+		const customDataChange = (e: { detail: { value: number } }) => {
+			selectedIndustryIndex.value = e.detail.value;
+			// 这里可以添加筛选逻辑
+			console.log("选择了:", customData.value[e.detail.value]);
+		};
+
+		// 取消筛选
+		const cancelSelect = () => {
+			selectedIndustryIndex.value = -1;
+			// 这里可以重置筛选状态
+			console.log("取消筛选");
+		};
+
+		// 计算属性，用于显示选中的行业类型文本
+		const selectedIndustryText = computed(() => {
+			return selectedIndustryIndex.value !== -1 ? customData.value[selectedIndustryIndex.value] : '行业类型';
+		});
+
 		return {
 			jobs,
+			selectedIndustryIndex,
+			customData,
+			customDataChange,
+			cancelSelect,
+			selectedIndustryText,
 		};
 	}
 }
@@ -165,8 +206,73 @@ export default {
 	justify-content: space-around;
 	align-items: center;
 	font-size: 12px;
-	margin: 10px 0;
+	margin:  0;
 	color: rgba(117, 117, 117, 1);
+
+	.jobCompanyType {
+		flex: 1;
+		margin: 0;
+	}
+
+	.jobCategory {
+		flex: 1;
+		margin: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		.filter {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 10px 0;
+			color: rgba(117, 117, 117, 1);
+			border-radius: 20px;
+
+			image {
+				width: 10px;
+				height: 5px;
+			}
+
+			/* 确认筛选后的样式 */
+			&.active {
+				color: rgba(60, 141, 255, 1);
+
+				image {
+					src: '/src/static/zhaopin/蓝色箭头.png'; // 更改图片路径
+				}
+			}
+
+		}
+	}
+
+	.jobCity {
+		flex: 1;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		navigator {
+			padding: 10px 0;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		image {
+			width: 10px;
+			height: 5px;
+		}
+
+		/* 确认筛选后的样式 */
+		&.active {
+			color: rgba(60, 141, 255, 1);
+
+			image {
+				src: '/src/static/zhaopin/蓝色箭头.png'; // 更改图片路径
+			}
+		}
+	}
 }
 
 .zhaopinList {

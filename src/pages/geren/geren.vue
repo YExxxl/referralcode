@@ -107,13 +107,8 @@
 import { defineComponent, reactive, ref, onMounted } from 'vue';
 import { getStatusBarHeight, getTitleBarHeight } from '@/utils/system.js';
 import { postLoginWxMinAPI } from '@/services/login';
+import { updateUserInfoAPI } from '@/services/user';
 import UniPopup from '@dcloudio/uni-ui/lib/uni-popup/uni-popup.vue';
-
-
-interface UserInfo {
-  avatar: string;
-  nickname: string;
-}
 
 
 export default defineComponent({
@@ -155,21 +150,126 @@ export default defineComponent({
       state.searchIcon = e.show
     }
 
+    // 用户状态
     const isLogin = ref(false);
-    const userInfo = reactive<UserInfo>({
-      avatar: '/static/geren/头像.png',
-      nickname: '未登录/注册'
+    const userInfo = reactive({
+      avatar: '/static/geren/avatar.png',  // 设置默认头像路径
+      nickname: '未登录/注册',
+      gender: undefined as '男' | '女' | undefined,
+      location: ''
     });
 
+    // 协议勾选状态
     const agreementChecked = ref(false);
-
     const toggleAgreement = () => {
       agreementChecked.value = !agreementChecked.value;
     };
 
+    // // 获取微信登录code
+    // let LoginCode = '';
+    // const getCode = async () => {
+    //   const res = await uni.login({ provider: 'weixin' });
+    //   LoginCode = res.code;
+    // };
+
+    // // 处理手机号登录
+    // const handleGetPhoneNumber = async (ev: UniHelper.ButtonOnGetphonenumberEvent) => {
+    //   if (!agreementChecked.value) {
+    //     uni.showToast({ title: '请先同意协议', icon: 'none' });
+    //     return;
+    //   }
+
+    //   if (!ev.detail?.encryptedData || !ev.detail?.iv) {
+    //     uni.showToast({ title: '获取手机号失败', icon: 'none' });
+    //     return;
+    //   }
+
+    //   try {
+    //     // 显示加载中
+    //     uni.showLoading({ title: '登录中...', mask: true });
+
+    //     // 调用登录接口
+    //     const res = await postPhoneLoginAPI({
+    //       loginCode: LoginCode,
+    //       phoneCode: JSON.stringify({  // 根据后端要求可能需要调整
+    //         encryptedData: ev.detail.encryptedData,
+    //         iv: ev.detail.iv
+    //       })
+    //     });
+
+    //     // 登录成功处理
+    //     if (res.code === 200) {
+    //       // 更新用户信息
+    //       userInfo.avatar = res.data.userInfo?.avatar || '@/static/geren/头像.png';
+    //       userInfo.nickname = res.data.userInfo?.nickname || '微信用户';
+    //       isLogin.value = true;
+
+    //       // 存储token
+    //       uni.setStorageSync('token', res.data.token);
+
+    //       uni.showToast({ title: '登录成功' });
+    //       popup.value?.close();
+    //     } else {
+    //       throw new Error(res.message || '登录失败');
+    //     }
+    //   } catch (error) {
+    //     console.error('登录失败:', error);
+    //     const errorMessage = error instanceof Error ? error.message : '登录失败';
+    //     uni.showToast({
+    //       title: errorMessage,
+    //       icon: 'none'
+    //     });
+    //   } finally {
+    //     uni.hideLoading();
+    //   }
+    // };
+
+    // // 更新用户信息
+    // const handleUpdateInfo = async () => {
+    //   try {
+    //     uni.showLoading({ title: '更新中...' });
+
+    //     await updateUserInfoAPI({
+    //       avatar: userInfo.avatar,
+    //       nickname: userInfo.nickname,
+    //       gender: userInfo.gender,
+    //       location: userInfo.location
+    //     });
+
+    //     uni.showToast({ title: '更新成功', icon: 'success' });
+    //   } catch (error) {
+    //     const errorMessage = error instanceof Error ? error.message : '登录失败';
+    //     uni.showToast({
+    //       title: errorMessage || '更新失败',
+    //       icon: 'none'
+    //     });
+    //   } finally {
+    //     uni.hideLoading();
+    //   }
+    // };
+
+    // // 选择头像
+    // const chooseAvatar = async () => {
+    //   try {
+    //     const res = await uni.chooseImage({
+    //       count: 1,
+    //       sizeType: ['compressed'],
+    //       sourceType: ['album']
+    //     });
+
+    //     userInfo.avatar = res.tempFilePaths[0];
+
+    //     // 实际项目中这里需要先上传图片到服务器
+    //     // const uploadRes = await uploadFileAPI(res.tempFilePaths[0]);
+    //     // userInfo.avatar = uploadRes.url;
+
+    //   } catch (error) {
+    //     console.error('选择头像失败:', error);
+    //   }
+    // };
+
 
     let loginCode = '';
-
     const getCode = async (): Promise<void> => {
       try {
         const res = await uni.login({ provider: 'weixin' });
@@ -251,6 +351,8 @@ export default defineComponent({
       getCode,
       handleGetPhoneNumber,
       handleSmsLogin,
+      // chooseAvatar,
+      // handleUpdateInfo
     };
   },
 });
