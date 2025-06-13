@@ -8,37 +8,48 @@
 						<text class="jobType">校招</text>
 					</text>
 				</view>
+
 				<view class="jobInfo">
 					<view class="jobTag">
-						<text>行业:互联网</text>
+						<text class="jobTag title">行业:</text>
+						<text class="jobTag content">互联网</text>
 					</view>
-					<text class="jobNeituima">内推码:E30QP</text>
+					<view class="jobNeituima">
+						<text class="jobNeituima title">内推码:</text>
+						<text class="jobNeituima content">E30QP</text>
+					</view>
 					<view class="jobLink">
-						<text>内推链接:https://idealjobs.cn/</text>
+						<view class="jobLinkItem">
+							<text class="jobLink title">内推链接:</text>
+							<text class="jobLink content">https://idealjobs.cn/</text>
+						</view>
+						<view class="jobCopy">
+							<text>复制</text>
+						</view>
 					</view>
 					<view class="jobTips">
-						<text>备注:无</text>
+						<text class="jobTips title">备注:</text>
+						<text class="jobTips content">无</text>
 					</view>
 				</view>
+
 				<view class="jobFooter">
 					<view class="jobInt">
 						<view class="jobViews">
-							<image class="image2" src="/src/static/index/浏览.png"></image>
+							<image class="image2" src="/src/static/index/浏览2.png"></image>
 							<text>5000</text>
 						</view>
 						<view class="jobDate">
-							<image class="image2" src="/src/static/index/时间戳.png"></image>
+							<image class="image2" src="/src/static/index/发布时间2.png"></image>
 							<text>2024-05-31</text>
 						</view>
 					</view>
 				</view>
-				<view class="jobCopy">
-					<text>复制</text>
-				</view>
+
 			</view>
-			<view class="jobImage">
+			<!-- <view class="jobImage">
 				<image class="image3" src="/src/static/index/相机（内推图片上传）.png"></image>
-			</view>
+			</view> -->
 		</view>
 
 		<!-- 选择按钮 -->
@@ -123,24 +134,56 @@ export default {
 		display: flex;
 		align-items: center;
 		margin-bottom: 5px;
+
+		.title {
+			width: 60px;
+		}
 	}
 
 	.jobNeituima {
 		display: flex;
 		align-items: center;
 		margin-bottom: 5px;
+
+		.title {
+			width: 60px;
+		}
 	}
 
 	.jobLink {
 		display: flex;
 		align-items: center;
 		margin-bottom: 5px;
+		justify-content: space-between;
+
+		.jobLinkItem {
+			display: flex;
+			align-items: center;
+
+			.title {
+				width: 60px;
+			}
+		}
+
+		.jobCopy {
+			background-color: rgba(53, 146, 252, 1);
+			color:#fff;
+			border-radius: 15px;
+			padding: 5px 10px;
+			font-size: 12px;
+			cursor: pointer;
+			align-items: center;
+		}
 	}
 
 	.jobTips {
 		display: flex;
 		align-items: center;
 		margin-bottom: 5px;
+
+		.title {
+			width: 60px;
+		}
 	}
 }
 
@@ -162,7 +205,7 @@ export default {
 		.jobViews {
 			display: flex;
 			align-items: center;
-			margin: 0 5px 5px 0;
+			margin: 0 15px 5px 0;
 		}
 
 		.jobDate {
@@ -173,11 +216,7 @@ export default {
 	}
 }
 
-.jobCopy {
-	color: rgba(53, 146, 252, 1);
-	text-decoration: underline;
-	cursor: pointer;
-}
+
 
 .jobImage {
 	display: flex;
@@ -192,7 +231,7 @@ export default {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 10px;
+	padding: 10px 20px;
 	background-color: #fff;
 	position: fixed;
 	bottom: 0;
@@ -204,7 +243,7 @@ export default {
 		display: flex;
 		align-items: center;
 		font-size: 13px;
-		margin: 0 10px;
+		margin: 10px;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -219,7 +258,8 @@ export default {
 	.collect {
 		font-size: 13px;
 		opacity: 1;
-		color: rgba(53, 146, 252, 1);
+		// color: rgba(53, 146, 252, 1);
+		color: #000000;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -236,7 +276,7 @@ export default {
 		opacity: 1;
 		border-radius: 17px;
 		height: 35px;
-		background: linear-gradient(to right, rgba(56, 139, 255, 1) , rgba(56, 139, 255, 0.7));
+		background: linear-gradient(to right, rgba(56, 139, 255, 1), rgba(56, 139, 255, 0.7));
 		color: rgba(255, 255, 255, 1);
 		margin: 0 10px;
 		display: flex;

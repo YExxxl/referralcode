@@ -18,8 +18,12 @@
     </view>
 
     <!-- 搜索框 -->
-    <SearchTab></SearchTab>
-
+    <view>
+      <navigator url="/pages/index/search" open-type="navigate" class="search">
+        <SearchTab></SearchTab>
+      </navigator>
+    </view>
+    
     <!-- 校园大使汇/实习大全 -->
     <OtherApp></OtherApp>
 
@@ -30,7 +34,7 @@
         <view class="tab" :class="{ active: activeList === '最新' }" @click="switchList('最新')">最新</view>
       </view>
 
-      <view class="filter" :class="{ active: selectedIndustryIndex !== -1 }">
+      <view class="filter" :class="{ active: selectedIndustryIndex !== 0 && selectedIndustryIndex !== -1 }">
         <picker :range="customData" mode="selector" @change="customDataChange" @cancel="cancelSelect"
           :value="selectedIndustryIndex">筛选</picker>
         <image src="/src/static/index/筛选（黑色）.png" mode="aspectFit" />
@@ -62,12 +66,14 @@ import { getStatusBarHeight, getTitleBarHeight } from '@/utils/system.js';
 import SearchTab from "@/components/SearchTab/SearchTab.vue";
 import OtherApp from "@/components/OtherApp/OtherApp.vue";
 import NeituiList from "@/components/NeituiList/NeituiList.vue";
+import picker from "@/components/picker/picker.vue";
 
 export default {
   components: {
     SearchTab,
     OtherApp,
     NeituiList,
+    picker,
   },
   setup() {
     // 状态管理
@@ -75,19 +81,27 @@ export default {
     const activeTab = ref("校招");
     const activeList = ref("热门");
 
-    const selectedIndustryIndex = ref(-1); // 当前选中的行业索引
-    const customData = ref(["游戏设计", "机械设计", "工业设计", "互联网", "影视行业", "人工智能", "大数据"]);
+    const selectedIndustryIndex = ref(0); // 当前选中的行业索引
+    const customData = ref(["全部", "游戏设计", "机械设计", "工业设计", "互联网", "影视行业", "人工智能", "大数据"]);
 
     // 筛选行业变化
     const customDataChange = (e: { detail: { value: number } }) => {
       selectedIndustryIndex.value = e.detail.value;
+      // 只有当选择的不是"全部"时才显示筛选成功提示
+      if (e.detail.value !== 0) {
+        uni.showToast({
+          title: '筛选成功',
+          icon: 'success',
+          duration: 1500
+        });
+      }
       // 这里可以添加筛选逻辑
       console.log("选择了:", customData.value[e.detail.value]);
     };
 
     // 取消筛选
     const cancelSelect = () => {
-      selectedIndustryIndex.value = -1;
+      selectedIndustryIndex.value = 0;
       // 这里可以重置筛选状态
       console.log("取消筛选");
     };
@@ -223,6 +237,11 @@ export default {
   }
 }
 
+/* 搜索框 */
+.search{
+  z-index: 100;
+}
+
 /* 校招/实习切换按钮 */
 .navButtons {
   display: flex;
@@ -270,7 +289,7 @@ export default {
 
   .tab.active {
     color: rgb(255, 255, 255);
-    background-color: rgba(0, 122, 255, 1);
+    background-color: rgba(53, 146, 252, 0.8);
   }
 
   .filter {
@@ -303,11 +322,11 @@ export default {
 .jobList {
   margin: 10px;
   overflow: hidden;
-  
+
   &:last-child {
     margin-bottom: 0;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    
+
   }
 }
 

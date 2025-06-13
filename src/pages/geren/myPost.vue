@@ -60,7 +60,7 @@ export default {
 
         // 定义一个方法来根据职位ID获取不同的详情页URL
         const getDetailUrl = (id: number) => {
-            return `/pages/index/xiangqing?id=${id}`; // 例如：根据职位ID动态生成URL
+            return `/pages/geren/myPostDetails?id=${id}`; // 例如：根据职位ID动态生成URL
         };
 
         return {

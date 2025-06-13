@@ -84,9 +84,9 @@
             </view>
 
             <view class="action-buttons">
-                <view class="reset" @click="resetForm">重置</view>
+                <view class="delete" @click="resetForm">删除</view>
                 <view class="publish" @click="publishInternship" :class="{ disabled: isSubmitting }">
-                    {{ isSubmitting ? '发布中...' : '发布内推' }}
+                    {{ isSubmitting ? '提交中...' : '提交修改' }}
                 </view>
             </view>
         </view>
@@ -504,11 +504,11 @@ export default defineComponent({
     justify-content: space-around;
     margin-top: 20px;
 
-    .reset {
+    .delete {
         padding: 10px 20px;
         border-radius: 17px;
-        border: rgba(79, 120, 255, 1) solid 1px;
-        color: rgb(0, 0, 0);
+        border: rgb(252, 41, 41) solid 1px;
+        color: rgb(252, 41, 41);
         cursor: pointer;
     }
 

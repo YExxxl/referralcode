@@ -10,8 +10,8 @@
 
     <view class="fill" :style="{ height: (getStatusBarHeight() + getTitleBarHeight()) + 'px' }"></view>
 
-    <view class="person">
-      <button class="picture" @tap="showPopup">
+    <view class="person" @tap="showPopup">
+      <button class="picture">
         <image :src="userInfo.avatar" mode="aspectFit"></image>
       </button>
       <view class="name">
@@ -70,7 +70,7 @@
     <!-- 弹窗 -->
     <uni-popup ref="popup" type="bottom" :mask="true" @change="popupChange" :animation="false">
       <view class="popupContent">
-        <!-- <uni-icons type="closeempty" size="24" color="#999" @click="closePopup"></uni-icons> -->
+        <uni-icons class="closeIcon" type="closeempty" size="24" color="#999" @click="closePopup"></uni-icons>
         <view class="welcomeSection">
           <text class="welcomeTitle">欢迎来到内推码</text>
           <text class="welcomeSubtitle">内推码，求职快人一步！</text>
@@ -93,9 +93,17 @@
         <view class="agreement">
           <checkbox :checked="false" @click="toggleAgreement" style="transform:scale(0.7)" class="borderblue blue" />
           <text class="agreementText">我已阅读并同意</text>
-          <text class="linkText">《用户服务协议》</text>
+          <view class="linkText">
+            <navigator url="/pages/geren/serviceAgreement" open-type="navigate">
+              《用户服务协议》
+            </navigator>
+          </view>
           <text class="agreementText">和</text>
-          <text class="linkText">《隐私政策》</text>
+          <view class="linkText">
+            <navigator url="/pages/geren/privacyAgreement" open-type="navigate">
+              《隐私政策》
+            </navigator>
+          </view>
         </view>
       </view>
     </uni-popup>
@@ -135,6 +143,11 @@ export default defineComponent({
       if (isLogin.value) return;  // 如果已登录，直接返回，不打开弹窗
       await getCode();  // 获取微信登录 code
       popup.value?.open();  // 调用弹窗的 open() 方法
+    };
+
+    // 处理弹窗关闭事件
+    const closePopup = () => {
+      popup.value?.close();
     };
 
     //通过弹窗显隐控制导航栏的显示和隐藏
@@ -340,6 +353,7 @@ export default defineComponent({
       getStatusBarHeight,
       getTitleBarHeight,
       showPopup,
+      closePopup,
       popup,
       onGetphonenumber,
       userInfo,
@@ -484,6 +498,12 @@ export default defineComponent({
   border-radius: 20px 20px 0 0;
   background-color: #ffffff;
   z-index: 1000;
+
+  .closeIcon {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+  }
 
   .welcomeSection {
     text-align: center;

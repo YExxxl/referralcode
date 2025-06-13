@@ -1,7 +1,7 @@
 <template>
   <view class="search-container" :style="{ background: backgroundColor, borderRadius: borderRadius }">
     <image :src="searchIcon" mode="aspectFit" class="image1" />
-    <input class="search-input" type="text" placeholder="搜索公司" />
+    <input class="search-input" type="text" placeholder="请输入搜索内容" />
   </view>
 </template>
 
@@ -44,6 +44,7 @@ export default {
 
   .search-input {
     padding: 10px 10px;
+    width: calc(100% - 50px);
   }
 }
 </style>

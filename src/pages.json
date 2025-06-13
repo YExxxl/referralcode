@@ -7,7 +7,7 @@
         "navigationBarTitleText": "内推广场",
         "navigationBarBackgroundColor": "#309AEC",
         "navigationBarTextStyle": "white",
-        "enablePullDownRefresh": false,
+        "enablePullDownRefresh": true,
         "backgroundColor": "#ffffff",
         "navigationStyle": "custom"
       }
@@ -23,6 +23,12 @@
       "path": "pages/index/xiangqing",
       "style": {
         "navigationBarTitleText": "内推详情"
+      }
+    },
+    {
+      "path": "pages/index/search",
+      "style": {
+        "navigationBarTitleText": "搜索"
       }
     },
     {
@@ -59,6 +65,14 @@
       "style": {
         "navigationBarTitleText": "我的发布",
         "navigationBarBackgroundColor": "#ffffff"
+      }
+    },
+    {
+      "path": "pages/geren/myPostDetails",
+      "style": {
+        "navigationBarTitleText": "我的发布详情",
+        "navigationBarBackgroundColor": "#ffffff",
+        "navigationStyle": "custom"
       }
     },
     {
@@ -127,20 +141,20 @@
       {
         "text": "内推广场",
         "pagePath": "pages/index/index",
-        "iconPath": "static/index/新闻资讯.png",
-        "selectedIconPath": "static/index/新闻资讯.png"
+        "iconPath": "static/tabbar/内推广场-灰色.png",
+        "selectedIconPath": "static/tabbar/内推广场-蓝色.png"
       },
       {
         "text": "招聘",
         "pagePath": "pages/zhaopin/zhaopin",
-        "iconPath": "static/zhaopin/zhaopin.png",
-        "selectedIconPath": "static/zhaopin/zhaopin.png"
+        "iconPath": "static/tabbar/招聘-灰色.png",
+        "selectedIconPath": "static/tabbar/招聘-蓝色.png"
       },
       {
         "text": "个人中心",
         "pagePath": "pages/geren/geren",
-        "iconPath": "static/geren/geren.png",
-        "selectedIconPath": "static/geren/geren.png"
+        "iconPath": "static/tabbar/个人中心-灰色.png",
+        "selectedIconPath": "static/tabbar/个人中心-蓝色.png"
       }
     ],
     "position": "bottom"
